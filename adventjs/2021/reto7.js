@@ -1,0 +1,49 @@
+const almacen = {
+  'estanteria1': {
+    'cajon1': {
+      'producto1': 'coca-cola',
+      'producto2': 'fanta',
+      'producto3': 'sprite'
+    }
+  },
+  'estanteria2': {
+    'cajon1': 'vacio',
+    'cajon2': {
+      'producto1': 'pantalones',
+      'producto2': 'camiseta' // <- ¡Está aquí!
+    }
+  }
+}
+
+const otroAlmacen = {
+  'baul': {
+    'fondo': {
+      'objeto': 'cd-rom',
+      'otro-objeto': 'disquette',
+      'otra-cosa': 'mando'
+    }
+  }
+}
+
+console.log(contains(almacen, 'camiseta'));
+console.log(contains(otroAlmacen, 'gameboy'));
+
+
+function contains(store, product) {
+
+  const entries = Object.entries(store);
+
+  if(Object.values(store).includes(product) || entries.includes(product)){
+    return true;
+  };
+
+  for (const [objectKey, objectValue] of entries) {
+
+    if(typeof objectValue === 'object'){
+       if(contains(objectValue, product)) return true;
+    }
+    
+  }
+  
+  return false
+}
